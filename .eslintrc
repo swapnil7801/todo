@@ -4,5 +4,9 @@
     "node": true
   },
   "extends": "airbnb-base",
-  "plugins": ["promise"]
+  "plugins": ["promise"],
+  "rules": {
+    "unused": false,
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+  }
 }
