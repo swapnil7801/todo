@@ -6,17 +6,18 @@ const { Schema } = mongoose;
 const todoSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
   },
   done: {
     type: Boolean,
-    default: false
+    default: false,
   },
   userId: {
-    type: Types.ObjectId, ref: 'User'
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: { type: Date, default: Date.now() },

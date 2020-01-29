@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
 
 // Define schema for todo items
-const todoSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
-    required:true
+    required: true,
   },
-  password:{
+  password: {
     type: String,
-  }
+  },
 });
 
-const Todo = mongoose.model('User', todoSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = Todo;
+module.exports = User;
