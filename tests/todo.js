@@ -18,14 +18,14 @@ describe('todo Api test case', () => {
     email: 'test@gmail.com',
     password: 'pass',
   };
-  const todoData={
-    name:'test',
-    description:'desc',
-  }
+  const todoData = {
+    name: 'test',
+    description: 'desc',
+  };
   it('create  todo', async () => {
     try {
       const dbUser = await login.signUp(user.email, user.password);
-      todoData.userId= dbUser._id
+      todoData.userId = dbUser._id;
       const result = await todo.create(todoData.name, todoData.description, todoData.userId);
       expect(result._id).to.not.equal(null);
     } catch (err) {}
@@ -35,9 +35,6 @@ describe('todo Api test case', () => {
     try {
       const result = await todo.findById(todoData.userId);
       expect(result._id).to.not.equal(null);
-    } catch (err) {
-
-    }
+    } catch (err) {}
   });
 });
-

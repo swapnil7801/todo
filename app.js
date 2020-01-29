@@ -28,8 +28,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/todo', todoRouter);
-app.use('/auth', authRouter);
+app.use('/api/todo', todoRouter);
+app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -41,11 +41,10 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  console.log(' err.message;', err.message);
+  // console.log(' err.message;', err.message);
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
+  res.json(err);
 });
 
 module.exports = app;

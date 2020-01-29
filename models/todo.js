@@ -20,7 +20,7 @@ const todoSchema = new Schema({
     ref: 'User',
   },
   createdAt: { type: Date, default: Date.now() },
-  updatedAt: { type: Date, default: Date.now() }
+  updatedAt: { type: Date, default: Date.now() },
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
