@@ -1,4 +1,3 @@
-// repositories/TodoRepository
 const createError = require('http-errors');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
