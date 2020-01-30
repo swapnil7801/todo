@@ -48,6 +48,15 @@ router.delete('/:id', validateToken, async (req, res, next) => {
     return next(error);
   }
 });
-router.get('/list/:user', validateToken, (req, res, next) => res.send('respond with a resource'));
+router.get('/list/:user', validateToken, async (req, res, next) => {
+  try {
+    const { user } = req.params;
+    const result = await Todo.findByUser(user);
+    return res.json(result);
+  } catch (error) {
+    // console.log(error);
+    return next(error);
+  }
+});
 
 module.exports = router;

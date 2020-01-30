@@ -16,8 +16,8 @@ class Todo {
     return todo.save();
   }
 
-  findAll() {
-    return this.Model.find();
+  findByUser(id) {
+    return this.Model.find({ userId: id });
   }
 
   findById(id) {

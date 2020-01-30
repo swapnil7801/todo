@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 const config = require('../configs/config');
 const errors = require('../controllers/errors');
 
@@ -22,12 +23,19 @@ module.exports = {
         req.decoded = result;
         next();
       } catch (err) {
-        console.log("err1",err)
         throw errors.invalidToken(err);
       }
     } else {
-      console.log("err2",err)
       throw errors.invalidToken();
     }
+  },
+  validate: validations => async (req, res, next) => {
+    await Promise.all(validations.map(validation => validation.run(req)));
+
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+    res.status(422).json({ errors: errors.array() });
   },
 };

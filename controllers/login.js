@@ -19,7 +19,7 @@ class UserController {
     return user.save();
   }
 
-   async authenticate(email, password) {
+  async authenticate(email, password) {
     const dbUser = await User.findOne({ email });
     if (!dbUser) {
       throw errors.userNotFound(email);
