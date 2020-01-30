@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"> </span></a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Welcome:<span id="userEmail"> <span
+                                class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="logout()">LogOut</button>
+            </form>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div class="container">
+        <h2> ToDo App </h2> <br> <br>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="container">
+                    <input type="text" name="taskName" id='taskName' placeholder="Task Name">
+                    <input type="text" name="taskDesc" id='taskDesc' placeholder="Task Desctiption">
+                    <button onclick="addTask()"> Add Task </button>
+                    <br>
+                    <span id="addTaskDetails" style="color: red;"></span>
+                    <br> <br>
+                    <h2> Added Task </h2>
+                    <div>
+                        <ul class="list-group" id="taskList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">Task Details:
+                <table class="table  table-hover">
+                    <thead>
+                        <tr>
+                            <th> Name</th>
+                            <th>Details</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id='taskDetails'>
+                        <span>
+
+                        </span>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</body>
+<% include partials/script %>
+</html>
