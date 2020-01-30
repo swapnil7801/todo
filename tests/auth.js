@@ -17,9 +17,7 @@ describe('Auth Api test case', () => {
   };
   it('Signup User', async () => {
     try {
-      console.log('user', user);
       const result = await login.signUp(user.email, user.password);
-      console.log('result:', result);
       expect(result.email).to.equal(user.email);
     } catch (err) {}
   });

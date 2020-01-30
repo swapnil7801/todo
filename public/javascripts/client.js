@@ -1,4 +1,3 @@
-
 let userData;
 $(document).ready(function () {
   userData = getSession('token')
@@ -21,7 +20,6 @@ function deleteTask(todoId) {
     method: 'DELETE',
     type: 'DELETE', // For jQuery < 1.9
     success: function (data) {
-      console.log("removed", data)
       $(`#${todoId}`).remove();
     },
     error: function (data) {
@@ -57,7 +55,6 @@ function showTask(todoId) {
      </tr> `);
     },
     error: function (data) {
-      console.log("error", data.responseJSON)
     }
   });
 }
@@ -85,7 +82,6 @@ function getTodo() {
       });
     },
     error: function (data) {
-      console.log("error", data.responseJSON)
     }
   });
 }
@@ -114,8 +110,6 @@ function addTask() {
       $('#addTaskDetails').html(``)
       $('#taskName').val("")
       $('#taskDesc').val("")
-      console.log("data", data)
-      console.log("success", data._id, data.name)
       $('#taskList').append(`
       <li class="list-group-item" id=${data._id}>${data.name} 
       <button  style="float: right"  onclick="showTask('${data._id}')"> Get Details  </button>
@@ -134,11 +128,12 @@ function logout() {
 }
 
 function login() {
+  $('#loginValidation').html('')
   const email = $('#email').val()
   const password = $('#password').val()
   const postData = { email, password }
   $.ajax({
-    url: 'http://localhost:3000/api/auth/login',
+    url: '/api/auth/login',
     data: JSON.stringify(postData),
     cache: false,
     contentType: 'application/json',
@@ -146,8 +141,6 @@ function login() {
     method: 'POST',
     type: 'POST', // For jQuery < 1.9
     success: function (data) {
-      console.log("data", data)
-      console.log("success", data)
       const token = {
         token: data.token,
         id: data.result._id,
@@ -157,11 +150,51 @@ function login() {
       window.location.href = '/home';
     },
     error: function (data) {
-      console.log("error", data.responseJSON)
+      $('#loginValidation').html(data.responseJSON.message)
+
     }
   });
 }
+function signUp() {
+  const email = $('#email').val()
+  const password = $('#password').val()
+  const password2 = $('#password2').val()
+  if ((!email) || (!password) || (!password2)) {
+    $('#signupValidation').html(`Please enter  email and password`)
+    return null
+  }
+  if (!validateEmail(email)) {
+    $('#signupValidation').html(`Please enter a valid email`)
+    return null
+  }
+  if (password !== password2) {
+    $('#signupValidation').html(`Passwords are  not matching.`)
+    return null
+  }
+  const postData = { email, password }
+  $('#signupValidation').html(``)
 
+  $.ajax({
+    url: '/api/auth/signup',
+    data: JSON.stringify(postData),
+    cache: false,
+    contentType: 'application/json',
+    processData: false,
+    method: 'POST',
+    type: 'POST', // For jQuery < 1.9
+    success: function (data) {
+      const token = {
+        token: data.token,
+        id: data.result._id,
+        email: data.result.email
+      }
+      setSession('token', token)
+      window.location.href = '/home';
+    },
+    error: function (data) {
+    }
+  });
+}
 
 
 function setSession(key, value) {
@@ -173,3 +206,11 @@ function getSession(key) {
 function removeSession(key) {
   localStorage.removeItem(key);
 }
+function validateEmail(email) {
+  const atposition = email.indexOf("@");
+  const dotposition = email.lastIndexOf(".");
+  if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+    return false;
+  }
+  return true
+}  

@@ -10,7 +10,7 @@ describe('todo Api test case', () => {
     helpers.setupTest();
   });
 
-  afterEach(async () => {
+  after(async () => {
     await helpers.clearDb(todoModel);
     await helpers.clearDb(userModel);
   });
@@ -22,18 +22,34 @@ describe('todo Api test case', () => {
     name: 'test',
     description: 'desc',
   };
+  let todoId;
   it('create  todo', async () => {
     try {
       const dbUser = await login.signUp(user.email, user.password);
       todoData.userId = dbUser._id;
       const result = await todo.create(todoData.name, todoData.description, todoData.userId);
+      todoId = result._id;
       expect(result._id).to.not.equal(null);
     } catch (err) {}
   });
 
-  it.skip('get  todo', async () => {
+  it('get  todo by userId', async () => {
     try {
-      const result = await todo.findById(todoData.userId);
+      const result = await todo.findByUser(todoData.userId);
+      expect(result._id).to.not.equal(null);
+    } catch (err) {}
+  });
+
+  it('udpate  todo ', async () => {
+    try {
+      todoData.description = 'changed';
+      const result = await todo.updateById(todoId, todoData);
+      expect(result._id).to.not.equal(null);
+    } catch (err) {}
+  });
+  it('delete  todo', async () => {
+    try {
+      const result = await todo.deleteById(todoId);
       expect(result._id).to.not.equal(null);
     } catch (err) {}
   });
